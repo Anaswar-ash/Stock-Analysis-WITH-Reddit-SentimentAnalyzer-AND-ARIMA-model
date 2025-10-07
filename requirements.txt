@@ -1,0 +1,7 @@
+flask
+yfinance
+pandas
+statsmodels
+plotly
+praw
+textblob

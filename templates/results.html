@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto px-4 py-8">
+        <a href="/" class="text-teal-500 hover:text-teal-300">&larr; Back to Home</a>
+        {% if error %}
+            <div class="bg-red-500 text-white p-4 rounded-lg mt-8">
+                <p class="font-bold">Error:</p>
+                <p>{{ error }}</p>
+            </div>
+        {% else %}
+            <h1 class="text-4xl font-bold text-center my-8">{{ info.longName }} ({{ info.symbol }})</h1>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <p class="text-lg">{{ info.longBusinessSummary }}</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-4 my-8 text-center">
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                    <p class="font-bold text-teal-400">Market Cap</p>
+                    <p>{{ "${:,.0f}".format(info.marketCap) }}</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                    <p class="font-bold text-teal-400">Day High / Low</p>
+                    <p>{{ "${:.2f} / ${:.2f}".format(info.dayHigh, info.dayLow) }}</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                    <p class="font-bold text-teal-400">P/E Ratio</p>
+                    <p>{{ "{:.2f}".format(info.trailingPE) if info.trailingPE else 'N/A' }}</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                    <p class="font-bold text-teal-400">Dividend Yield</p>
+                    <p>{{ "{:.2%}".format(info.dividendYield) if info.dividendYield else 'N/A' }}</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                    <p class="font-bold text-teal-400">52 Week High</p>
+                    <p>{{ "${:.2f}".format(info.fiftyTwoWeekHigh) }}</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                    <p class="font-bold text-teal-400">Reddit Sentiment</p>
+                    <a href="/reddit/{{ info.symbol }}" class="text-teal-500 hover:text-teal-300">{{ "{:.2f}".format(sentiment) }}</a>
+                </div>
+            </div>
+
+            <div class="my-8">
+                {{ plot_html|safe }}
+            </div>
+
+            <p class="text-sm text-gray-500 text-center mt-8">Disclaimer: This is not financial advice. All data is for informational purposes only.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
