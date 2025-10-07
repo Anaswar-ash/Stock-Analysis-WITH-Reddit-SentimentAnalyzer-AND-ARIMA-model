@@ -1,42 +1,29 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reddit Sentiment Analysis</title>
+    <title>Reddit Sentiment - {{ ticker_symbol }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white">
-    <nav class="bg-gray-800 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-white text-2xl font-bold">ARIMA & Reddit Stock Forecast 📈</a>
-        </div>
-    </nav>
     <div class="container mx-auto px-4 py-8">
         <a href="/" class="text-teal-500 hover:text-teal-300">&larr; Back to Home</a>
-        <div class="text-center my-8">
-            <h1 class="text-4xl font-bold">Reddit Sentiment Analysis for {{ ticker_symbol }}</h1>
-        </div>
-
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8 text-center">
-            <p class="text-lg">Overall Sentiment Score: <span class="font-bold text-teal-400">{{ "{:.2f}".format(sentiment) }}</span></p>
+        <h1 class="text-4xl font-bold text-center my-8">Reddit Sentiment for {{ ticker_symbol }}</h1>
+        <div class="text-center mb-8">
+            <p class="text-2xl">Overall Sentiment Score: <span class="font-bold {{ 'text-green-500' if sentiment > 0 else ('text-red-500' if sentiment < 0 else 'text-gray-500') }}">{{ "{:.2f}".format(sentiment) }}</span></p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for post in posts %}
-                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
-                    <h3 class="font-bold text-lg mb-2">{{ post.title }}</h3>
-                    <p class="text-sm text-gray-400 mb-2">Score: {{ post.score }}</p>
-                    <p class="text-sm mb-4">{{ post.selftext }}</p>
-                    <hr class="my-4 border-gray-700">
-                    <h4 class="font-bold mb-2">Comments:</h4>
-                    {% for comment in post.comments %}
-                        <div class="bg-gray-700 p-3 rounded-lg mb-2">
-                            <p class="text-sm">{{ comment.body }}</p>
-                            <p class="text-xs text-gray-500 mt-1">Score: {{ comment.score }}</p>
-                        </div>
-                    {% endfor %}
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-bold mb-2"><a href="{{ post.url }}" target="_blank" class="text-teal-400 hover:text-teal-200">{{ post.title }}</a></h2>
+                    <p class="text-sm text-gray-400">Upvotes: {{ post.score }} | Comments: {{ post.num_comments }}</p>
+                    <p class="text-sm text-gray-500">Sentiment: {{ "{:.2f}".format(post.sentiment) }}</p>
                 </div>
+            {% else %}
+                <p class="text-center col-span-full">No Reddit posts found for this ticker.</p>
             {% endfor %}
         </div>
     </div>

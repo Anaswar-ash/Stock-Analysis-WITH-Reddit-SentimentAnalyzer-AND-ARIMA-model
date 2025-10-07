@@ -1,65 +1,57 @@
+# Stock Analysis with Reddit Sentiment and ARIMA Model
 
-# ARIMA & Reddit Stock Forecast 📈
+This project is a web-based application that performs stock analysis by combining traditional time-series forecasting with modern sentiment analysis from social media.
 
-A Python repo for **hybrid stock prediction**. It combines **ARIMA** (time series analysis) with **Reddit Sentiment Analysis** (NLP on market subreddits) to generate enhanced, dual-factor forecasts. Leverages both price history and public sentiment for smarter investment insights.
+## Features
 
-## Technologies Used
+*   **Interactive Charts:** Visualizes historical stock data, including Simple Moving Averages (SMAs), and an ARIMA-based price forecast.
+*   **Reddit Sentiment Analysis:** Fetches recent posts from Reddit (r/wallstreetbets and r/stocks) to gauge market sentiment for a specific stock.
+*   **Sentiment-Adjusted Forecast:** Adjusts the ARIMA forecast based on the calculated Reddit sentiment, providing a more holistic view.
+*   **Web-Based UI:** A simple and intuitive Flask web interface for entering stock tickers and viewing the analysis.
 
-*   **Backend:** Python
-*   **Web Framework:** Flask
-*   **Data Fetching:** yfinance, PRAW
-*   **Data Manipulation:** pandas
-*   **Time-Series Forecasting:** statsmodels
-*   **Sentiment Analysis:** TextBlob
-*   **Data Visualization:** plotly
-*   **Frontend Styling:** Tailwind CSS
+## How It Works
 
-## How to Install and Run the Application
+1.  **Data Fetching:** The application uses the `yfinance` library to download historical stock data from Yahoo Finance.
+2.  **Technical Analysis:** It calculates 50-day and 200-day Simple Moving Averages (SMAs) to identify trends.
+3.  **ARIMA Forecasting:** A time-series ARIMA model is used to forecast future stock prices based on historical data.
+4.  **Reddit Sentiment:** The `praw` library is used to connect to the Reddit API and fetch posts related to the stock ticker. The sentiment of these posts is analyzed using `TextBlob`.
+5.  **Combined Analysis:** The ARIMA forecast is adjusted based on the sentiment score from Reddit.
+6.  **Visualization:** The results are displayed in an interactive chart using `plotly` and a web page rendered by `Flask`.
+
+## Getting Started
+
+### Prerequisites
+
+*   Python 3.x
+*   A Reddit account and API credentials (client ID, client secret, user agent).
+
+### Installation
 
 1.  **Clone the repository:**
 
-```bash
-git clone https://github.com/your-username/stock-analysis-app.git
-```
+    ```bash
+    git clone https://github.com/your-username/Stock-Analysis-WITH-Reddit-SentimentAnalyzer-AND-ARIMA-model.git
+    cd Stock-Analysis-WITH-Reddit-SentimentAnalyzer-AND-ARIMA-model
+    ```
 
-2.  **Install the required libraries:**
+2.  **Install the dependencies:**
 
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-3.  **Get your Reddit API credentials:**
+3.  **Run the application:**
 
-    *   Go to [https://www.reddit.com/prefs/apps](https://www.reddit.com/prefs/apps)
-    *   Click "are you a developer? create an app..."
-    *   Fill out the form:
-        *   **name:** anything you want
-        *   **type:** script
-        *   **description:** anything you want
-        *   **about url:** http://localhost:5000
-        *   **redirect uri:** http://localhost:5000
-    *   Click "create app"
-    *   You will now have a `client_id` and a `client_secret`.
+    ```bash
+    python app.py
+    ```
 
-4.  **Run the application:**
+4.  Open your web browser and navigate to `http://127.0.0.1:5000`.
 
-```bash
-python app.py
-```
+## Important Security Note
 
-5.  **Open your web browser and go to:**
-
-```
-http://127.0.0.1:5000
-```
-
-## How to Use the Application
-
-1.  Enter a stock ticker symbol in the input field.
-2.  Enter your Reddit API credentials.
-3.  Click the "Analyze" button.
-4.  The application will display a detailed analysis page with company information, key financial metrics, an interactive chart showing historical prices, moving averages, a 30-day price forecast, and the Reddit sentiment score.
+This application currently requires you to enter your Reddit API credentials directly into the web form. This is **not a secure practice** for a production environment. For personal, local use, it is acceptable, but if you plan to deploy this application, you should implement a more secure way to handle these credentials, such as using environment variables or a dedicated secrets management service.
 
 ## Disclaimer
 
-This is not financial advice. All data is for informational purposes only.
+This is not financial advice. All data and analysis are for informational purposes only.
